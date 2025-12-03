@@ -9,9 +9,6 @@ snake-server
 # 测试文件
 *.test
 
-# Go模块缓存
-go.sum
-
 # IDE配置
 .idea/
 .vscode/
