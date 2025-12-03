@@ -1,0 +1,39 @@
+# 编译的二进制文件
+snake-server
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# 测试文件
+*.test
+
+# IDE配置
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+
+# 临时文件
+tmp/
+temp/
+
+# Git相关
+.git/
+.gitignore
+
+# 文档（不需要放入镜像）
+*.md
+!README.md
+
+# 部署脚本
+deploy.sh
