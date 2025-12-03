@@ -7,10 +7,11 @@ import (
 )
 
 const (
-	GridWidth  = 50
-	GridHeight = 50
-	MaxFoods   = 10
-	TickRate   = 50 * time.Millisecond // 每50毫秒更新一次，即20帧/秒
+	GridWidth      = 50
+	GridHeight     = 50
+	MaxFoods       = 10
+	TickRate       = 50 * time.Millisecond // 每50毫秒更新一次，即20帧/秒
+	MoveInterval   = 3                     // 蛇每3帧移动一次，实际速度约6.67步/秒
 )
 
 // Game 表示游戏实例
@@ -48,11 +49,25 @@ func (g *Game) Update() {
 	g.mutex.Lock()
 	defer g.mutex.Unlock()
 
-	// 移动所有存活的蛇
+	// 移动所有存活的蛇（按移动间隔控制速度）
+	shouldCheckCollision := false
 	for _, snake := range g.Snakes {
 		if snake.Alive {
-			snake.Move()
+			snake.MoveCounter++
+			// 只有当计数器达到移动间隔时才移动
+			if snake.MoveCounter >= MoveInterval {
+				snake.Move()
+				snake.MoveCounter = 0
+				shouldCheckCollision = true
+			}
 		}
+	}
+
+	// 只有当有蛇移动时才检查碰撞和食物
+	if !shouldCheckCollision {
+		// 即使没有移动，也要广播状态（保持20帧刷新）
+		g.broadcastGameState()
+		return
 	}
 
 	// 检查碰撞和食物

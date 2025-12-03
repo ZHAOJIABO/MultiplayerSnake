@@ -16,6 +16,7 @@ type Snake struct {
 	NextDirection Direction // 用于存储下一个方向，避免在一帧内多次改变方向
 	DeathReason   string    // 死亡原因
 	KillerName    string    // 谁杀死的
+	MoveCounter   int       // 移动计数器，用于控制移动速度
 }
 
 // 预定义的颜色列表
