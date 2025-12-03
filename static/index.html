@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多人在线贪吃蛇</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>多人在线贪吃蛇</h1>
+
+        <!-- 游戏开始界面 -->
+        <div id="startScreen" class="start-screen">
+            <div class="input-group">
+                <label for="playerName">输入你的昵称：</label>
+                <input type="text" id="playerName" placeholder="玩家名称" maxlength="15">
+            </div>
+            <button id="startButton" class="btn">开始游戏</button>
+        </div>
+
+        <!-- 游戏界面 -->
+        <div id="gameScreen" class="game-screen" style="display: none;">
+            <div class="game-info">
+                <div class="info-item">
+                    <span class="label">在线玩家：</span>
+                    <span id="playerCount">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">你的分数：</span>
+                    <span id="myScore">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">状态：</span>
+                    <span id="status">存活</span>
+                </div>
+            </div>
+
+            <canvas id="gameCanvas"></canvas>
+
+            <div class="controls">
+                <p>控制方式：使用 W A S D 或方向键</p>
+                <button id="restartButton" class="btn btn-small" style="display: none;">重新开始</button>
+
+                <!-- 屏幕方向按钮 -->
+                <div class="direction-buttons">
+                    <div class="direction-row">
+                        <button class="direction-btn" data-direction="up">▲</button>
+                    </div>
+                    <div class="direction-row">
+                        <button class="direction-btn" data-direction="left">◀</button>
+                        <button class="direction-btn" data-direction="down">▼</button>
+                        <button class="direction-btn" data-direction="right">▶</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 排行榜 -->
+            <div class="leaderboard">
+                <h3>排行榜</h3>
+                <ul id="leaderboardList"></ul>
+            </div>
+        </div>
+
+        <!-- 连接状态 -->
+        <div id="connectionStatus" class="connection-status"></div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
