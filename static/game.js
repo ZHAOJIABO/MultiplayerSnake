@@ -32,15 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 方向按钮事件
+    // 方向按钮事件 - 使用mousedown/touchstart避免延迟
     const directionButtons = document.querySelectorAll('.direction-btn');
     directionButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        // 移动端：使用touchstart（无延迟）
+        btn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             const direction = e.target.getAttribute('data-direction');
             sendDirection(direction);
-        });
-        // 添加触摸支持
-        btn.addEventListener('touchstart', (e) => {
+        }, { passive: false });
+
+        // PC端：使用mousedown（比click更快）
+        btn.addEventListener('mousedown', (e) => {
             e.preventDefault();
             const direction = e.target.getAttribute('data-direction');
             sendDirection(direction);
