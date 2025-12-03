@@ -10,7 +10,7 @@ const (
 	GridWidth  = 50
 	GridHeight = 50
 	MaxFoods   = 10
-	TickRate   = 100 * time.Millisecond // 每100毫秒更新一次，即10帧/秒
+	TickRate   = 50 * time.Millisecond // 每50毫秒更新一次，即20帧/秒
 )
 
 // Game 表示游戏实例

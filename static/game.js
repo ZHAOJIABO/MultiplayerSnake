@@ -4,6 +4,8 @@ let canvas, ctx;
 let cellSize = 16;
 let myPlayerId = null;
 let hasShownDeathNotification = false; // 记录是否已显示过死亡通知
+let lastDirection = null; // 记录上次发送的方向，避免重复发送
+let directionQueue = []; // 方向指令队列
 
 // DOM元素
 const startScreen = document.getElementById('startScreen');
@@ -360,11 +362,18 @@ function updateLeaderboard(players) {
     });
 }
 
-// 发送方向指令
+// 发送方向指令（优化：避免重复发送相同方向）
 function sendDirection(direction) {
     if (!ws || ws.readyState !== WebSocket.OPEN) {
         return;
     }
+
+    // 避免重复发送相同方向
+    if (direction === lastDirection) {
+        return;
+    }
+
+    lastDirection = direction;
 
     ws.send(JSON.stringify({
         type: 'direction',
