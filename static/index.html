@@ -3,67 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>多人在线贪吃蛇</title>
+    <title>喝酒小游戏</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>多人在线贪吃蛇</h1>
+        <h1>喝酒小游戏</h1>
 
-        <!-- 游戏开始界面 -->
-        <div id="startScreen" class="start-screen">
-            <div class="input-group">
-                <label for="playerName">输入你的昵称：</label>
-                <input type="text" id="playerName" placeholder="玩家名称" maxlength="15">
-            </div>
-            <button id="startButton" class="btn">开始游戏</button>
-        </div>
-
-        <!-- 游戏界面 -->
-        <div id="gameScreen" class="game-screen" style="display: none;">
-            <div class="game-info">
-                <div class="info-item">
-                    <span class="label">在线玩家：</span>
-                    <span id="playerCount">0</span>
-                </div>
-                <div class="info-item">
-                    <span class="label">你的分数：</span>
-                    <span id="myScore">0</span>
-                </div>
-                <div class="info-item">
-                    <span class="label">状态：</span>
-                    <span id="status">存活</span>
-                </div>
-            </div>
-
-            <canvas id="gameCanvas"></canvas>
-
-            <div class="controls">
-                <p>控制方式：使用 W A S D 或方向键</p>
-                <button id="restartButton" class="btn btn-small" style="display: none;">重新开始</button>
-
-                <!-- 屏幕方向按钮 -->
-                <div class="direction-buttons">
-                    <div class="direction-row">
-                        <button class="direction-btn" data-direction="up">▲</button>
-                    </div>
-                    <div class="direction-row">
-                        <button class="direction-btn" data-direction="left">◀</button>
-                        <button class="direction-btn" data-direction="down">▼</button>
-                        <button class="direction-btn" data-direction="right">▶</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 排行榜 -->
-            <div class="leaderboard">
-                <h3>排行榜</h3>
-                <ul id="leaderboardList"></ul>
+        <!-- 游戏菜单界面 -->
+        <div id="menuScreen" class="menu-screen">
+            <div class="game-buttons">
+                <button class="game-btn" onclick="showGame('roulette')">
+                    <div class="game-icon">🎯</div>
+                    <div class="game-title">大转盘</div>
+                    <div class="game-desc">点击开始转，指到谁喝</div>
+                </button>
+                <button class="game-btn" onclick="showGame('rouletteAdvanced')">
+                    <div class="game-icon">🎲</div>
+                    <div class="game-title">大转盘增强版</div>
+                    <div class="game-desc">自定义扇形和内容</div>
+                </button>
+                <button class="game-btn" onclick="showGame('bomb')">
+                    <div class="game-icon">💣</div>
+                    <div class="game-title">炸弹游戏</div>
+                    <div class="game-desc">轮流点击，炸到谁喝</div>
+                </button>
+                <button class="game-btn" onclick="showGame('snake')">
+                    <div class="game-icon">🐍</div>
+                    <div class="game-title">贪吃蛇</div>
+                    <div class="game-desc">多人在线对战</div>
+                </button>
             </div>
         </div>
 
-        <!-- 连接状态 -->
-        <div id="connectionStatus" class="connection-status"></div>
+        <!-- 大转盘游戏 -->
+        <div id="rouletteGame" class="game-container" style="display: none;">
+            <button class="back-btn" onclick="backToMenu()">返回</button>
+            <h2>大转盘</h2>
+            <div class="roulette-container">
+                <canvas id="rouletteCanvas" width="400" height="400"></canvas>
+                <div class="roulette-result" id="rouletteResult"></div>
+                <button class="btn" id="spinBtn" onclick="spinRoulette()">点击转动</button>
+            </div>
+        </div>
+
+        <!-- 大转盘增强版游戏 -->
+        <div id="rouletteAdvancedGame" class="game-container" style="display: none;">
+            <button class="back-btn" onclick="backToMenu()">返回</button>
+            <h2>大转盘增强版</h2>
+
+            <!-- 设置界面 -->
+            <div class="roulette-advanced-setup" id="rouletteAdvancedSetup">
+                <p>输入每个扇形的内容（一行一个）：</p>
+                <textarea id="advancedRouletteItems" rows="8" placeholder="玩家1&#10;玩家2&#10;玩家3&#10;玩家4&#10;玩家5&#10;玩家6"></textarea>
+                <button class="btn" onclick="startAdvancedRoulette()">开始游戏</button>
+            </div>
+
+            <!-- 游戏界面 -->
+            <div class="roulette-advanced-container" id="rouletteAdvancedContainer" style="display: none;">
+                <canvas id="rouletteAdvancedCanvas" width="500" height="500"></canvas>
+                <div class="roulette-result" id="rouletteAdvancedResult"></div>
+                <button class="btn" id="spinAdvancedBtn" onclick="spinAdvancedRoulette()">点击转动</button>
+                <button class="btn btn-small" onclick="resetAdvancedRoulette()" style="margin-left: 10px;">重新设置</button>
+            </div>
+        </div>
+
+        <!-- 炸弹游戏 -->
+        <div id="bombGame" class="game-container" style="display: none;">
+            <button class="back-btn" onclick="backToMenu()">返回</button>
+            <h2>炸弹游戏</h2>
+            <div class="bomb-container">
+                <div class="bomb-grid" id="bombGrid"></div>
+                <div class="bomb-result" id="bombResult"></div>
+                <button class="btn" onclick="resetBombGame()" style="margin-top: 20px;">重新开始</button>
+            </div>
+        </div>
+
+        <!-- 贪吃蛇游戏 -->
+        <div id="snakeGame" class="game-container" style="display: none;">
+            <button class="back-btn" onclick="backToMenu()">返回</button>
+            <h2>多人在线贪吃蛇</h2>
+
+            <!-- 游戏开始界面 -->
+            <div id="startScreen" class="start-screen">
+                <div class="input-group">
+                    <label for="playerName">输入你的昵称：</label>
+                    <input type="text" id="playerName" placeholder="玩家名称" maxlength="15">
+                </div>
+                <button id="startButton" class="btn">开始游戏</button>
+            </div>
+
+            <!-- 游戏界面 -->
+            <div id="gameScreen" class="game-screen" style="display: none;">
+                <div class="game-info">
+                    <div class="info-item">
+                        <span class="label">在线玩家：</span>
+                        <span id="playerCount">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">你的分数：</span>
+                        <span id="myScore">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">状态：</span>
+                        <span id="status">存活</span>
+                    </div>
+                </div>
+
+                <canvas id="gameCanvas"></canvas>
+
+                <div class="controls">
+                    <p>控制方式：使用 W A S D 或方向键</p>
+                    <button id="restartButton" class="btn btn-small" style="display: none;">重新开始</button>
+
+                    <!-- 屏幕方向按钮 -->
+                    <div class="direction-buttons">
+                        <div class="direction-row">
+                            <button class="direction-btn" data-direction="up">▲</button>
+                        </div>
+                        <div class="direction-row">
+                            <button class="direction-btn" data-direction="left">◀</button>
+                            <button class="direction-btn" data-direction="down">▼</button>
+                            <button class="direction-btn" data-direction="right">▶</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 排行榜 -->
+                <div class="leaderboard">
+                    <h3>排行榜</h3>
+                    <ul id="leaderboardList"></ul>
+                </div>
+            </div>
+
+            <!-- 连接状态 -->
+            <div id="connectionStatus" class="connection-status"></div>
+        </div>
     </div>
 
     <script src="game.js"></script>

@@ -5,17 +5,21 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #333;
+    padding: 10px;
+    overflow-x: hidden;
 }
 
 .container {
     max-width: 1200px;
+    width: 100%;
     padding: 20px;
     text-align: center;
 }
@@ -24,15 +28,315 @@ h1 {
     color: white;
     font-size: 2.5em;
     margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
+    letter-spacing: 1px;
+    animation: titleFadeIn 0.8s ease-out;
+}
+
+@keyframes titleFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 游戏菜单界面 */
+.menu-screen {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 1000px;
+    margin: 0 auto;
+    backdrop-filter: blur(10px);
+    animation: menuFadeIn 0.6s ease-out;
+}
+
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.game-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    padding: 10px;
+}
+
+.game-btn {
+    background: white;
+    border: none;
+    border-radius: 20px;
+    padding: 35px 25px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+}
+
+.game-btn:hover::before {
+    opacity: 1;
+}
+
+.game-btn:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.35);
+}
+
+.game-btn > * {
+    position: relative;
+    z-index: 1;
+}
+
+.game-btn:hover .game-icon,
+.game-btn:hover .game-title,
+.game-btn:hover .game-desc {
+    color: white;
+}
+
+.game-icon {
+    font-size: 64px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    transition: all 0.3s ease;
+}
+
+.game-btn:hover .game-icon {
+    transform: scale(1.15) rotate(5deg);
+}
+
+.game-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.game-desc {
+    font-size: 14px;
+    color: #666;
+    transition: color 0.3s ease;
+    line-height: 1.5;
+}
+
+.game-btn:active {
+    transform: translateY(-5px) scale(0.98);
+}
+
+/* 游戏容器 */
+.game-container {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 24px;
+    padding: 35px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    margin: 0 auto;
+    animation: containerFadeIn 0.5s ease-out;
+}
+
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-container h2 {
+    color: #667eea;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.back-btn {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+.back-btn:active {
+    transform: translateY(0);
+}
+
+/* 大转盘样式 */
+.roulette-setup, .bomb-setup, .roulette-advanced-setup {
+    text-align: center;
+}
+
+.roulette-setup textarea, .bomb-setup textarea, .roulette-advanced-setup textarea {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    margin: 15px 0;
+}
+
+.roulette-container, .roulette-advanced-container {
+    text-align: center;
+}
+
+#rouletteCanvas, #rouletteAdvancedCanvas {
+    display: block;
+    margin: 20px auto;
+    border: 3px solid #667eea;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.roulette-result {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e74c3c;
+    margin: 20px 0;
+    min-height: 30px;
+}
+
+/* 炸弹游戏样式 */
+.current-player {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    color: #667eea;
+}
+
+.bomb-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 420px;
+    margin: 25px auto;
+}
+
+.bomb-item {
+    aspect-ratio: 1;
+    background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 20px;
+    font-size: 56px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.bomb-item::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.bomb-item:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.bomb-item:hover:not(.clicked) {
+    transform: scale(1.08) rotate(5deg);
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+}
+
+.bomb-item.clicked {
+    transform: scale(0.92);
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: linear-gradient(145deg, #95a5f5 0%, #9d85ce 100%);
+}
+
+.bomb-item.exploded {
+    animation: explode 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: linear-gradient(145deg, #e74c3c 0%, #c0392b 100%);
+    box-shadow: 0 0 40px rgba(231, 76, 60, 0.8);
+}
+
+.bomb-result {
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    margin: 25px 0;
+    min-height: 35px;
+    color: #e74c3c;
+    text-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+    animation: resultPop 0.5s ease-out;
+}
+
+@keyframes resultPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* 开始界面 */
 .start-screen {
-    background: white;
+    background: transparent;
     border-radius: 15px;
     padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     max-width: 400px;
     margin: 0 auto;
 }
@@ -66,21 +370,54 @@ h1 {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    padding: 15px 40px;
+    padding: 16px 40px;
     font-size: 18px;
-    border-radius: 8px;
+    font-weight: 600;
+    border-radius: 14px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300%;
+    height: 300%;
 }
 
 .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+}
+
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .btn-small {
-    padding: 10px 25px;
-    font-size: 14px;
+    padding: 12px 28px;
+    font-size: 15px;
     margin-top: 10px;
 }
 
@@ -257,17 +594,143 @@ h1 {
 
 /* 响应式设计 */
 @media (max-width: 768px) {
+    body {
+        padding: 5px;
+    }
+
     h1 {
-        font-size: 1.8em;
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .menu-screen {
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    .game-buttons {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 5px;
+    }
+
+    .game-btn {
+        padding: 30px 20px;
+    }
+
+    .game-icon {
+        font-size: 56px;
+    }
+
+    .game-title {
+        font-size: 20px;
+    }
+
+    .game-desc {
+        font-size: 13px;
+    }
+
+    .game-container {
+        padding: 25px 18px;
+        border-radius: 20px;
+    }
+
+    .game-container h2 {
+        font-size: 24px;
     }
 
     .game-info {
         flex-direction: column;
+        gap: 12px;
     }
 
-    #gameCanvas {
+    #gameCanvas, #rouletteCanvas, #rouletteAdvancedCanvas {
         width: 100% !important;
         height: auto !important;
+        max-width: 380px;
+    }
+
+    .bomb-grid {
+        max-width: 100%;
+        gap: 12px;
+    }
+
+    .bomb-item {
+        font-size: 48px;
+        border-radius: 16px;
+    }
+
+    .direction-buttons {
+        margin-top: 15px;
+    }
+
+    .direction-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+    }
+
+    .roulette-result, .bomb-result {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.6em;
+    }
+
+    .menu-screen {
+        padding: 20px 15px;
+    }
+
+    .game-container {
+        padding: 20px 15px;
+    }
+
+    .game-btn {
+        padding: 25px 18px;
+    }
+
+    .game-icon {
+        font-size: 48px;
+    }
+
+    .btn {
+        padding: 14px 32px;
+        font-size: 16px;
+    }
+
+    .btn-small {
+        padding: 10px 24px;
+        font-size: 14px;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    .game-btn:hover {
+        transform: none;
+    }
+
+    .game-btn:active {
+        transform: scale(0.97);
+    }
+
+    .bomb-item:hover:not(.clicked) {
+        transform: none;
+    }
+
+    .bomb-item:active:not(.clicked) {
+        transform: scale(0.95);
+    }
+
+    .btn:hover {
+        transform: none;
+    }
+
+    .btn:active {
+        transform: scale(0.97);
     }
 }
 
@@ -292,4 +755,81 @@ h1 {
         opacity: 0;
         transform: translate(-50%, -40%);
     }
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(0.9);
+    }
+    50% {
+        transform: scale(1.4) rotate(10deg);
+    }
+    75% {
+        transform: scale(1.2) rotate(-5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* 加载动画 */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+/* 转盘旋转效果优化 */
+@keyframes spinGlow {
+    0%, 100% {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+}
+
+/* 爆炸粒子 */
+.explosion-particle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
+}
+
+/* 冲击波 */
+.shockwave {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    border: 4px solid rgba(255, 107, 107, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+}
+
+/* 震动动画 */
+@keyframes shake {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translate(-5px, 0);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translate(5px, 0);
+    }
+}
+
+.shake {
+    animation: shake 0.5s;
 }
