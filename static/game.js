@@ -34,12 +34,24 @@ function backToMenu() {
     myPlayerId = null;
     hasShownDeathNotification = false;
 
+    // 隐藏二维码弹窗
+    hideQRCode();
+
     // 显示菜单
     document.getElementById('menuScreen').style.display = 'block';
     document.getElementById('rouletteGame').style.display = 'none';
     document.getElementById('rouletteAdvancedGame').style.display = 'none';
     document.getElementById('bombGame').style.display = 'none';
     document.getElementById('snakeGame').style.display = 'none';
+}
+
+// ========== 二维码功能 ==========
+function showQRCode() {
+    document.getElementById('qrModal').style.display = 'flex';
+}
+
+function hideQRCode() {
+    document.getElementById('qrModal').style.display = 'none';
 }
 
 // ========== 大转盘游戏 ==========
