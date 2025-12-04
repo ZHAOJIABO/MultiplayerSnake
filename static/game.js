@@ -544,12 +544,13 @@ function spinAdvancedRoulette() {
             isAdvancedSpinning = false;
             document.getElementById('spinAdvancedBtn').disabled = false;
 
-            // 计算获胜者
-            const normalizedAngle = ((advancedPointerAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-            const pointerAngle = Math.PI / 2;
-            const winnerAngle = (pointerAngle - normalizedAngle + Math.PI * 2) % (Math.PI * 2);
+            // 计算获胜者 - 指针指向的扇形
+            // 将指针角度标准化到 [0, 2π) 范围
+            let normalizedAngle = ((advancedPointerAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
             const anglePerSection = (Math.PI * 2) / advancedRouletteItems.length;
-            const winnerIndex = Math.floor(winnerAngle / anglePerSection);
+
+            // 直接根据指针角度计算对应的扇形索引
+            const winnerIndex = Math.floor(normalizedAngle / anglePerSection) % advancedRouletteItems.length;
 
             document.getElementById('rouletteAdvancedResult').textContent =
                 `🎯 ${advancedRouletteItems[winnerIndex]}`;
