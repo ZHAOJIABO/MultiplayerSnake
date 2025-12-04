@@ -77,7 +77,7 @@ func (s *Snake) SetDirection(dir Direction) {
 }
 
 // Move 移动蛇
-func (s *Snake) Move() {
+func (s *Snake) Move(gridWidth, gridHeight int) {
 	if !s.Alive {
 		return
 	}
@@ -98,6 +98,19 @@ func (s *Snake) Move() {
 		newHead = Point{X: head.X - 1, Y: head.Y}
 	case Right:
 		newHead = Point{X: head.X + 1, Y: head.Y}
+	}
+
+	// 处理穿墙：从对面出来
+	if newHead.X < 0 {
+		newHead.X = gridWidth - 1
+	} else if newHead.X >= gridWidth {
+		newHead.X = 0
+	}
+
+	if newHead.Y < 0 {
+		newHead.Y = gridHeight - 1
+	} else if newHead.Y >= gridHeight {
+		newHead.Y = 0
 	}
 
 	// 将新头部添加到身体前面

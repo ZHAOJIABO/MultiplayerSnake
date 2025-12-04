@@ -545,11 +545,13 @@ function spinAdvancedRoulette() {
             document.getElementById('spinAdvancedBtn').disabled = false;
 
             // 计算获胜者 - 指针指向的扇形
+            // 指针绘制时指向上方（-π/2），需要调整角度以匹配扇形的起始角度（0）
+            let pointerDirection = advancedPointerAngle - Math.PI / 2;
             // 将指针角度标准化到 [0, 2π) 范围
-            let normalizedAngle = ((advancedPointerAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+            let normalizedAngle = ((pointerDirection % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
             const anglePerSection = (Math.PI * 2) / advancedRouletteItems.length;
 
-            // 直接根据指针角度计算对应的扇形索引
+            // 根据指针实际方向计算对应的扇形索引
             const winnerIndex = Math.floor(normalizedAngle / anglePerSection) % advancedRouletteItems.length;
 
             document.getElementById('rouletteAdvancedResult').textContent =

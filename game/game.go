@@ -56,7 +56,7 @@ func (g *Game) Update() {
 			snake.MoveCounter++
 			// 只有当计数器达到移动间隔时才移动
 			if snake.MoveCounter >= MoveInterval {
-				snake.Move()
+				snake.Move(GridWidth, GridHeight)
 				snake.MoveCounter = 0
 				shouldCheckCollision = true
 			}
@@ -78,12 +78,7 @@ func (g *Game) Update() {
 
 		head := snake.GetHead()
 
-		// 检查是否撞墙
-		if head.X < 0 || head.X >= GridWidth || head.Y < 0 || head.Y >= GridHeight {
-			snake.DeathReason = "wall"
-			snake.Die()
-			continue
-		}
+		// 撞墙逻辑已改为穿墙，不再需要检查撞墙死亡
 
 		// 检查是否撞到自己（可以吃掉自己的尾部）
 		if cutPosition := g.checkSelfCollision(snake); cutPosition > 0 {
