@@ -291,10 +291,11 @@ let isAdvancedSpinning = false;
 let advancedPointerAngle = 0;
 
 function startAdvancedRoulette() {
-    const itemsText = document.getElementById('advancedRouletteItems').value.trim();
+    let itemsText = document.getElementById('advancedRouletteItems').value.trim();
+
+    // 如果用户没有输入，使用默认值
     if (!itemsText) {
-        alert('请至少输入一个扇形内容！');
-        return;
+        itemsText = '喝一杯\n喝两杯\n真心话\n大冒险\n唱首歌\n喝一瓶';
     }
 
     advancedRouletteItems = itemsText.split('\n').filter(item => item.trim() !== '');

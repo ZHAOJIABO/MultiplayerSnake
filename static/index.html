@@ -34,11 +34,11 @@
                     <div class="game-title">贪吃蛇</div>
                     <div class="game-desc">多人在线对战</div>
                 </button>
-                <button class="game-btn qr-game-btn" onclick="showQRCode()">
-                    <div class="game-icon">📱</div>
-                    <div class="game-title">手机扫码</div>
-                    <div class="game-desc">扫码进入贪吃蛇</div>
-                </button>
+                <div class="game-btn qr-game-btn">
+                    <div class="game-title">手机扫码进入</div>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://snake.appbobo.com" alt="二维码" class="qr-image">
+                    <div class="game-desc"></div>
+                </div>
             </div>
         </div>
 
@@ -61,7 +61,7 @@
             <!-- 设置界面 -->
             <div class="roulette-advanced-setup" id="rouletteAdvancedSetup">
                 <p>输入每个扇形的内容（一行一个）：</p>
-                <textarea id="advancedRouletteItems" rows="8" placeholder="玩家1&#10;玩家2&#10;玩家3&#10;玩家4&#10;玩家5&#10;玩家6"></textarea>
+                <textarea id="advancedRouletteItems" rows="8" placeholder="喝一杯&#10;喝两杯&#10;真心话&#10;大冒险&#10;唱首歌&#10;喝一瓶"></textarea>
                 <button class="btn" onclick="startAdvancedRoulette()">开始游戏</button>
             </div>
 
