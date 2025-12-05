@@ -748,6 +748,12 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
 
+    // 设置大转盘增强版的默认占位符（使用真实换行符以支持移动端）
+    const advancedRouletteTextarea = document.getElementById('advancedRouletteItems');
+    if (advancedRouletteTextarea) {
+        advancedRouletteTextarea.placeholder = '喝一杯\n喝两杯\n真心话\n大冒险\n唱首歌\n喝一瓶';
+    }
+
     startButton.addEventListener('click', startGame);
     restartButton.addEventListener('click', restartGame);
 
